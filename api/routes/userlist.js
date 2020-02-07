@@ -5,7 +5,7 @@ const Users = require('../models/User');
 route.get('/list', (req, res, next)=>{
     var page = req.param('page') || 1;
     const options = {
-        select: '_id CUSTOMER_NAME',
+        select: '_id CUSTOMER_NAME CITY',
         page: page,
         limit: 10,
     };
@@ -23,7 +23,7 @@ route.get('/filter/by/city/:city', (req, res, next)=>{
         CITY: {$regex: city, $options: 'i'}
     };
     const options = {
-        select: '_id CUSTOMER_NAME',
+        select: '_id CUSTOMER_NAME CITY',
         page: page,
         limit: 10,
     };
