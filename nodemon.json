@@ -1,0 +1,7 @@
+{
+    "env":{
+        "PORT" : "5555",
+        "MONGODB_USER" : "olioDbUser",
+        "MONGODB_PWD" : "olioDbUser"
+    }
+}
