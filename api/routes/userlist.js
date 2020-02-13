@@ -128,7 +128,7 @@ route.get('/network/topology', (req, res, next)=>{
                 },
                 _data : {
                     $addToSet : { 
-                        device_name : '$IZO_SDWAN_DEVICE_NAMES',
+                        name : '$IZO_SDWAN_DEVICE_NAMES',
                         service_id : '$IZO_SDWAN_SRVC_ID',
                         customer_service_id : '$CUSTOMER_SERVICE_ID'
                     }
