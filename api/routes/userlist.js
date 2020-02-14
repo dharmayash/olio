@@ -182,20 +182,21 @@ route.get('/network/topology/:name', (req, res, next)=>{
     ];
     Users.aggregate(aggregate).then(docs=>{
         var jsonDoc = [];
+        var cname = '';
         docs.forEach(d => {
-            var name = d._id;
+            cname = d._id;
             var cities = d._city;
             var child = d._data;
             if(name && cities){
                 cities.forEach(c => {
                     if(c){
-                        var data = { name : name, size : 60, children : [ { name : c, size : 30, children : child } ] };
+                        var data = { name : c, size : 30, children : child };
                         jsonDoc.push(data);
                     }
                 })
             }
         });
-        res.status(200).json(jsonDoc);
+        res.status(200).json({name : cname, size : 60, children : jsonDoc});
     }).catch(err=>{throw err;});
 })
 
