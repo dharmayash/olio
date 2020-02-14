@@ -128,6 +128,7 @@ route.get('/network/topology', (req, res, next)=>{
                 },
                 _data : {
                     $addToSet : { 
+                        size : 4,
                         name : '$IZO_SDWAN_DEVICE_NAMES',
                         service_id : '$IZO_SDWAN_SRVC_ID',
                         customer_service_id : '$CUSTOMER_SERVICE_ID'
@@ -145,7 +146,7 @@ route.get('/network/topology', (req, res, next)=>{
             if(name && cities){
                 cities.forEach(c => {
                     if(c){
-                        var data = { name : name, children : [ { name : c, children : child } ] };
+                        var data = { name : name, size : 60, children : [ { name : c, size : 30, children : child } ] };
                         jsonDoc.push(data);
                     }
                 })
@@ -170,6 +171,7 @@ route.get('/network/topology/:name', (req, res, next)=>{
                 },
                 _data : {
                     $addToSet : { 
+                        size : 4,
                         name : '$IZO_SDWAN_DEVICE_NAMES',
                         service_id : '$IZO_SDWAN_SRVC_ID',
                         customer_service_id : '$CUSTOMER_SERVICE_ID'
@@ -187,7 +189,7 @@ route.get('/network/topology/:name', (req, res, next)=>{
             if(name && cities){
                 cities.forEach(c => {
                     if(c){
-                        var data = { name : name, children : [ { name : c, children : child } ] };
+                        var data = { name : name, size : 60, children : [ { name : c, size : 30, children : child } ] };
                         jsonDoc.push(data);
                     }
                 })
