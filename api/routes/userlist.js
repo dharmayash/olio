@@ -155,4 +155,46 @@ route.get('/network/topology', (req, res, next)=>{
     }).catch(err=>{throw err;});
 })
 
+// Network Topology As Per User
+route.get('/network/topology/:name', (req, res, next)=>{
+    var name = req.params.name;
+    const aggregate = [
+        {
+            $match : { 'CUSTOMER_NAME': { $regex: name, $options: 'i'} }
+        },
+        {
+            $group: {
+                _id: '$CUSTOMER_NAME',
+                _city : { 
+                    $addToSet : '$CITY'
+                },
+                _data : {
+                    $addToSet : { 
+                        name : '$IZO_SDWAN_DEVICE_NAMES',
+                        service_id : '$IZO_SDWAN_SRVC_ID',
+                        customer_service_id : '$CUSTOMER_SERVICE_ID'
+                    }
+                } 
+            }
+        }
+    ];
+    Users.aggregate(aggregate).then(docs=>{
+        var jsonDoc = [];
+        docs.forEach(d => {
+            var name = d._id;
+            var cities = d._city;
+            var child = d._data;
+            if(name && cities){
+                cities.forEach(c => {
+                    if(c){
+                        var data = { name : name, children : [ { name : c, children : child } ] };
+                        jsonDoc.push(data);
+                    }
+                })
+            }
+        });
+        res.status(200).json(jsonDoc);
+    }).catch(err=>{throw err;});
+})
+
 module.exports = route;
